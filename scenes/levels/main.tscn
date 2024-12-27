@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://yioivi0daon7"]
+
+[ext_resource type="PackedScene" uid="uid://cep6hjm727ee0" path="res://scenes/player/player.tscn" id="1_4qt2h"]
+[ext_resource type="PackedScene" uid="uid://cdtm4qd5ppkc0" path="res://scenes/prefabs/pickups/tiny_seed_essence.tscn" id="1_j5duv"]
+[ext_resource type="PackedScene" uid="uid://e0yh2sed3uuh" path="res://scenes/prefabs/pickups/growing_sprout_essence.tscn" id="2_blkj1"]
+[ext_resource type="PackedScene" uid="uid://x5pfin1sgr0k" path="res://scenes/prefabs/pickups/blooming_spirit_essence.tscn" id="3_emhps"]
+[ext_resource type="Script" path="res://scripts/camera_rig.gd" id="3_whluy"]
+[ext_resource type="PackedScene" uid="uid://b3h86g4wruc3" path="res://scenes/prefabs/pickups/ancient_guardian_essence.tscn" id="4_s7y8p"]
+
+[sub_resource type="Environment" id="Environment_fouwi"]
+background_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6vbnp"]
+albedo_color = Color(0.568973, 0.568973, 0.568973, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8y2fd"]
+albedo_color = Color(0.351605, 0.442084, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquhl"]
+albedo_color = Color(1, 0.517647, 1, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_4qt2h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44007, 0)
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Environment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_fouwi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World/Environment"]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 20, 0)
+light_energy = 1.5
+shadow_enabled = true
+shadow_bias = 0.01
+
+[node name="TestLevel" type="CSGCombiner3D" parent="World"]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="World/TestLevel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5, 0)
+size = Vector3(100, 10, 100)
+material = SubResource("StandardMaterial3D_6vbnp")
+
+[node name="GentleSlope" type="CSGBox3D" parent="World/TestLevel"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -8, 1, -8)
+size = Vector3(10, 0.1, 5)
+material = SubResource("StandardMaterial3D_8y2fd")
+
+[node name="SteepRamp" type="CSGBox3D" parent="World/TestLevel"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 8, 3, -8)
+size = Vector3(5, 0.1, 8)
+material = SubResource("StandardMaterial3D_lquhl")
+
+[node name="SteepRamp2" type="CSGBox3D" parent="World/TestLevel"]
+transform = Transform3D(-0.989124, -0.104004, -0.104004, 0, 0.707107, -0.707107, 0.147084, -0.699416, -0.699416, 8, 3, 6.7635)
+size = Vector3(5, 0.1, 8)
+material = SubResource("StandardMaterial3D_lquhl")
+
+[node name="HalfPipe" type="CSGCombiner3D" parent="World/TestLevel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2724, 0, 7.17504)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="World/TestLevel/HalfPipe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.197247, 0.84069, 0.0226946)
+size = Vector3(5, 5, 14.3)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="World/TestLevel/HalfPipe"]
+transform = Transform3D(-4.37114e-08, -1, 0, 0.948324, -4.14525e-08, -0.317305, 0.317305, -1.38698e-08, 0.948324, 0.123122, 6.23562, 0.0128899)
+operation = 2
+radius = 6.0
+height = 6.0
+sides = 25
+
+[node name="Pickups" type="Node3D" parent="World"]
+
+[node name="AncientGuardianEssence" parent="World/Pickups" instance=ExtResource("4_s7y8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.4962, 0.5, 5.32467)
+
+[node name="AncientGuardianEssence2" parent="World/Pickups" instance=ExtResource("4_s7y8p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.1639, 0.5, 5.32467)
+
+[node name="BloomingSpiritEssence" parent="World/Pickups" instance=ExtResource("3_emhps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.7155, 0.499998, 11.7442)
+
+[node name="BloomingSpiritEssence2" parent="World/Pickups" instance=ExtResource("3_emhps")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5826, 0.499998, 11.7442)
+
+[node name="GrowingSproutEssence" parent="World/Pickups" instance=ExtResource("2_blkj1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1473, 0.499996, 6.31009)
+
+[node name="GrowingSproutEssence2" parent="World/Pickups" instance=ExtResource("2_blkj1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.1473, 0.499996, -2.12633)
+
+[node name="TinySeedEssence" parent="World/Pickups" instance=ExtResource("1_j5duv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4614, 0.499998, 12.1764)
+
+[node name="TinySeedEssence2" parent="World/Pickups" instance=ExtResource("1_j5duv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4614, 0.499998, 18.1597)
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("3_whluy")
+target_path = NodePath("../Player")
+
+[node name="GameCamera" type="Camera3D" parent="CameraRig"]
+transform = Transform3D(0.707107, -0.408607, 0.577096, 0, 0.816138, 0.577858, -0.707107, -0.408607, 0.577096, 0, 0, 0)
+projection = 1
+size = 15.0
+near = 0.1
+far = 100.0

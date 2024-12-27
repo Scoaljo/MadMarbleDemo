@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdtm4qd5ppkc0"]
+
+[ext_resource type="Script" path="res://scenes/prefabs/pickups/growth_essence.gd" id="1_stenh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e3so3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugduc"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xghu5"]
+material = SubResource("StandardMaterial3D_ugduc")
+
+[node name="TinySeedEssence" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_stenh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_e3so3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("SphereMesh_xghu5")
